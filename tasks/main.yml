@@ -6,11 +6,11 @@
 
 - name: Install RVM default
   shell: >
-    \curl -sSL https://get.rvm.io | bash -s {{default_ruby}}
+    \curl -sSL https://get.rvm.io | bash -s {{opsroll.rvm.default_ruby}}
   notify:
     - reload environment
 
 - name: Install Rubies
   shell: >
     rvm install ruby-{{item}}
-  with_items: "{{ rubies }}"
+  with_items: "{{ opsroll.rvm.rubies }}"

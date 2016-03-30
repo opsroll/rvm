@@ -1,5 +1,6 @@
 ---
-
-default_ruby: stable
-rubies:
-  - stable
+opsroll:
+  rvm:
+    default_ruby: stable
+    rubies:
+      - stable
