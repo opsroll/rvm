@@ -1,2 +1,5 @@
 ---
 # handlers file for rvm
+
+- name: reload environment
+  action: command source $HOME/.bash_profile

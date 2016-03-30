@@ -1,2 +1,5 @@
 ---
-# vars file for rvm
+
+default_ruby: stable
+rubies:
+  - stable
