@@ -13,4 +13,4 @@
 - name: Install Rubies
   shell: >
     rvm install ruby-{{item}}
-  with_items: {{ rubies }}
+  with_items: "{{ rubies }}"
