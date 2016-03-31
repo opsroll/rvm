@@ -38,6 +38,12 @@ install:
   # Check ansible version
   - ansible --version
 
+  # Create ansible.cfg with correct roles_path
+  - printf '[defaults]\nroles_path=../' >$HOME/.ansible.cfg
+
+  # install opsrole.ansible environment
+  - ansible-galaxy install opsroll.ansible
+
 script:
   # Basic role syntax check
   - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
