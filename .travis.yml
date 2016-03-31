@@ -1,10 +1,19 @@
 ---
-os:
-  - linux
-  - osx
-
 language: python
-python: "2.7"
+cache:
+  apt: true
+  pip: true
+  directories:
+    - $TRAVIS_BUILD_DIR/venv
+
+matrix:
+  include:
+    - os: linux
+      sudo: false
+      python: "2.7"
+    - os: osx
+      sudo: true
+      language: generic
 
 # Use the new container infrastructure
 sudo: false
@@ -15,22 +24,22 @@ addons:
     packages:
     - python-pip
 
+before install:
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew update          ; fi
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then brew install python2 ; fi
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then virtualenv venv -p python2; fi
+    - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then source venv/bin/activate; fi
+
 install:
   # Install ansible
-  - pip install ansible
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then sudo pip install ansible; fi
+  - if [[ "$TRAVIS_OS_NAME" != "osx" ]]; then pip install ansible; fi
 
   # Check ansible version
   - ansible --version
 
-  - mkdir -p $HOME/.ansible/roles/galaxy
-
   # Create ansible.cfg with correct roles_path
-  - printf '[defaults]\nroles_path=$HOME/.ansible/roles/galaxy' > $HOME/.ansible.cfg
-
-  - ansible-galaxy install opsroll.ansible
-  
-    # use opsroll.ansible to setup our ansible conifguration.
-  - ansible-playbook tests/setup.yml
+  - printf '[defaults]\nroles_path=../' >$HOME/.ansible.cfg
 
 script:
   # Basic role syntax check
