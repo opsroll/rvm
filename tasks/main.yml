@@ -6,7 +6,7 @@
 
 - name: Set RVM auto-reload with message
   lineinfile: >
-    dest=$HOME/.rvmrc
+    dest={{lookup('env', 'HOME')}}/.rvmrc
     regexp=^rvm_auto_reload=
     line=rvm_auto_reload=1
 
