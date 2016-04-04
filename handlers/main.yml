@@ -2,4 +2,4 @@
 # handlers file for rvm
 
 - name: reload environment
-  action: command source $HOME/.bash_profile
+  action: command source {{lookup('env', 'HOME')}}/.bash_profile
